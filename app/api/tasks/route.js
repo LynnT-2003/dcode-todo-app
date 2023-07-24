@@ -2,10 +2,10 @@ import connectMongoDB from "@/app/libs/mongodb";
 import Task from "@/models/Task";
 import { NextResponse } from "next/server";
 
-export async function POST(req, res) {
-  const { title, memo } = await req.body;
+export async function POST(req) {
+  const { title, memo } = await req.json();
   await connectMongoDB();
-  await Task.create({ title, description });
+  await Task.create({ title, memo });
   return NextResponse.json({ message: "Topic Created" }, { status: 201 });
   // res.status(201).json(task);
 }
@@ -16,9 +16,9 @@ export async function GET() {
   return NextResponse.json(tasks);
 }
 
-export async function DELETE(req) {
-  const id = req.nextURL.searchParams.get("id");
+export async function DELETE(request) {
+  const id = request.nextUrl.searchParams.get("id");
   await connectMongoDB();
-  await Task.findByAndDelete(id);
-  return NextResponse.json({ message: "Task Deleted" }, { status: 200 });
+  await Task.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Task deleted" }, { status: 200 });
 }
