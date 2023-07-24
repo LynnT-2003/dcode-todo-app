@@ -64,42 +64,52 @@ const TasksList = () => {
 
   return (
     <>
-      {nonCompletedTasks.map((t) => (
-        <div
-          key={t._id}
-          className="px-12 p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
-          onClick={() => handleItemClick(t._id)}
-          style={{
-            cursor: "pointer",
-            opacity: clickedItemIds.includes(t._id) ? 0.3 : 1,
-          }}
-        >
-          <div>
-            <h2
-              className="text-2xl"
-              // onClick={() => handleCompleteTask(t)}
-              // style={{ cursor: "pointer" }}
-            >
-              {/* <label className="px-4">
-                <span style={{ transform: "scale(10)" }}>
-                  <input type="checkbox" />
-                </span>
-              </label> */}
-              {t.title}
-            </h2>
-            <h2 className="px12">{t.memo}</h2>
-            <p className="text-xs pt-3 text-blue-400">
-              Last Updated At: {new Date(t.updatedAt).toLocaleString()}
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <Link href={`/editTask/${t._id}`}>
-              <HiPencilAlt size={24} />
-            </Link>
-            <RemoveBtn id={t._id} />
-          </div>
+      {nonCompletedTasks.length === 0 ? (
+        <div className="px-12 py-4 border border-slate-300 my-3 ">
+          <p className="text-xl">No tasks found!</p>
+          <p className="text-gray-500">
+            Add tasks from the Navbar to see them here.
+          </p>
         </div>
-      ))}
+      ) : (
+        nonCompletedTasks.map((t) => (
+          <div
+            key={t._id}
+            className="px-12 p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
+            onClick={() => handleItemClick(t._id)}
+            style={{
+              cursor: "pointer",
+              opacity: clickedItemIds.includes(t._id) ? 0.3 : 1,
+            }}
+          >
+            <div>
+              <h2
+                className="text-2xl"
+                // onClick={() => handleCompleteTask(t)}
+                // style={{ cursor: "pointer" }}
+              >
+                {/* <label className="px-4">
+              <span style={{ transform: "scale(10)" }}>
+                <input type="checkbox" />
+              </span>
+            </label> */}
+                {t.title}
+              </h2>
+              <h2 className="px12">{t.memo}</h2>
+              <p className="text-xs pt-3 text-blue-400">
+                Last Updated At: {new Date(t.updatedAt).toLocaleString()}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Link href={`/editTask/${t._id}`}>
+                <HiPencilAlt size={24} />
+              </Link>
+              <RemoveBtn id={t._id} />
+            </div>
+          </div>
+        ))
+      )}
+
       {completed.length > 0 && (
         <>
           <h2 className="text-2xl pt-5">Completed Tasks</h2>

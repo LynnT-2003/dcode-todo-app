@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { RiAddBoxLine } from "react-icons/ri";
 
 const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ const Navbar = () => {
         ToDecode-App
       </Link>
       <Link className="text-white text-bold p-2" href={"/addTask"}>
-        Add+
+        <RiAddBoxLine size={50} />
       </Link>
     </nav>
   );
