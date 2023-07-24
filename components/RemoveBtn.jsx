@@ -16,7 +16,7 @@ export default function RemoveBtn({ id }) {
       });
 
       if (res.ok) {
-        router.refresh();
+        window.location.reload();
       }
     }
   };

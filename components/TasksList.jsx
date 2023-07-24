@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
 import { HiPencilAlt } from "react-icons/hi";
+import { MdOutlineCheckBox } from "react-icons/md";
 
 const getTasks = async () => {
   const APP_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,12 +26,12 @@ const getTasks = async () => {
 const TasksList = () => {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const fetchedTasks = await getTasks();
-      setTasks(fetchedTasks);
-    };
+  const fetchTasks = async () => {
+    const fetchedTasks = await getTasks();
+    setTasks(fetchedTasks);
+  };
 
+  useEffect(() => {
     fetchTasks();
     console.log("Tasks fetched");
     console.log({ tasks });
@@ -44,9 +45,15 @@ const TasksList = () => {
           className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
         >
           <div>
-            <h2 className="font-bold text-2xl">{t.title}</h2>
-            <h2>{t.memo}</h2>
-            <h2>{t._id}</h2>
+            <h2 className="font-bold text-2xl">
+              <label className="px-4">
+                <span style={{ transform: "scale(10)" }}>
+                  <input type="checkbox" />
+                </span>
+              </label>
+              {t.title}
+            </h2>
+            <h2 className="px-12">{t.memo}</h2>
           </div>
           <div className="flex gap-2">
             <RemoveBtn id={t._id} />
