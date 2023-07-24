@@ -88,6 +88,9 @@ const TasksList = () => {
               {t.title}
             </h2>
             <h2 className="px12">{t.memo}</h2>
+            <p className="text-xs pt-3 text-blue-400">
+              Last Updated At: {new Date(t.updatedAt).toLocaleString()}
+            </p>
           </div>
           <div className="flex gap-2">
             <Link href={`/editTask/${t._id}`}>
