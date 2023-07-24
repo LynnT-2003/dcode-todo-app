@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import RemoveBtn from "./RemoveBtn";
 import { HiPencilAlt } from "react-icons/hi";
-import { MdOutlineCheckBox } from "react-icons/md";
+import { CgUndo } from "react-icons/cg";
+import { MdOutlineDownloadDone } from "react-icons/md";
 
 const getTasks = async () => {
   const APP_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,6 +26,7 @@ const getTasks = async () => {
 
 const TasksList = () => {
   const [tasks, setTasks] = useState([]);
+  const [completed, setCompleted] = useState([]);
 
   const fetchTasks = async () => {
     const fetchedTasks = await getTasks();
@@ -37,32 +39,93 @@ const TasksList = () => {
     console.log({ tasks });
   }, []);
 
+  const handleCompleteTask = (task) => {
+    setCompleted((prevCompleted) => [...prevCompleted, task]);
+  };
+
+  const handleUnCompleteTask = (task) => {
+    setCompleted((prevCompleted) =>
+      prevCompleted.filter((t) => t._id !== task._id)
+    );
+  };
+
+  // Filter out the completed tasks from the tasks list
+  const nonCompletedTasks = tasks.filter((t) => !completed.includes(t));
+
+  const [clickedItemIds, setClickedItemIds] = useState([]);
+
+  const handleItemClick = (taskId) => {
+    setClickedItemIds((prevClickedItemIds) =>
+      prevClickedItemIds.includes(taskId)
+        ? prevClickedItemIds.filter((id) => id !== taskId)
+        : [...prevClickedItemIds, taskId]
+    );
+  };
+
   return (
     <>
-      {tasks.map((t) => (
+      {nonCompletedTasks.map((t) => (
         <div
           key={t._id}
-          className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
+          className="px-12 p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
+          onClick={() => handleItemClick(t._id)}
+          style={{
+            cursor: "pointer",
+            opacity: clickedItemIds.includes(t._id) ? 0.3 : 1,
+          }}
         >
           <div>
-            <h2 className="font-bold text-2xl">
-              <label className="px-4">
+            <h2
+              className="text-2xl"
+              // onClick={() => handleCompleteTask(t)}
+              // style={{ cursor: "pointer" }}
+            >
+              {/* <label className="px-4">
                 <span style={{ transform: "scale(10)" }}>
                   <input type="checkbox" />
                 </span>
-              </label>
+              </label> */}
               {t.title}
             </h2>
-            <h2 className="px-12">{t.memo}</h2>
+            <h2 className="px12">{t.memo}</h2>
           </div>
           <div className="flex gap-2">
-            <RemoveBtn id={t._id} />
             <Link href={`/editTask/${t._id}`}>
               <HiPencilAlt size={24} />
             </Link>
+            <RemoveBtn id={t._id} />
           </div>
         </div>
       ))}
+      {completed.length > 0 && (
+        <>
+          <h2 className="text-2xl pt-5">Completed Tasks</h2>
+          {completed.map((t) => (
+            <div
+              key={t._id}
+              className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
+            >
+              <div>
+                <h2 className="font-bold text-2xl">
+                  {/* <label className="px-4">
+                    <span style={{ transform: "scale(10)" }}>
+                      <input type="checkbox" />
+                    </span>
+                  </label> */}
+                  {t.title}
+                </h2>
+                <h2 className="px12">{t.memo}</h2>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => handleUnCompleteTask(t)}>
+                  <CgUndo size={27} />
+                </button>
+                <RemoveBtn id={t._id} />
+              </div>
+            </div>
+          ))}
+        </>
+      )}
     </>
   );
 };
