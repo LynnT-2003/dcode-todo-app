@@ -1,26 +1,26 @@
-import EditTopicForm from "@/components/EditTopicForm";
+import EditTaskForm from "@/components/EditTaskForm";
 
-export default function EditTask() {
-  return (
-    <>
-      <form className="flex flex-col gap-3">
-        <input
-          className="border border-slate-500 px-8 py-2 gap-3 form-control"
-          type="text"
-          placeholder="Task Title"
-        />
+const getTaskById = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/${id}`, {
+      cache: "no-store",
+    });
 
-        <input
-          className="border border-slate-500 px-8 py-2 gap-3 form-control"
-          type="text"
-          placeholder="Task Memo"
-        />
+    if (!res.ok) {
+      throw new Error("Failed to fetch Task");
+    }
 
-        <button className="bg-green-100 font-bold color-white py-2 px-6 w-fit ">
-          Update Task
-        </button>
-      </form>
-      ;
-    </>
-  );
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default async function EditTask({ params }) {
+  const { id } = params;
+  const { task } = await getTaskById(id);
+  const { title, memo } = task;
+  console.log(title, memo);
+  console.log(title, memo);
+  return <EditTaskForm id={id} title={title} memo={memo} />;
 }
