@@ -26,11 +26,13 @@ const getTasks = async () => {
 
 const TasksList = () => {
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [completed, setCompleted] = useState([]);
 
   const fetchTasks = async () => {
     const fetchedTasks = await getTasks();
     setTasks(fetchedTasks);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -61,6 +63,15 @@ const TasksList = () => {
         : [...prevClickedItemIds, taskId]
     );
   };
+
+  if (loading) {
+    // Render the loading GIF while fetching tasks
+    return (
+      <div className="flex justify-center items-center">
+        <img src="/loading.gif" alt="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -100,7 +111,8 @@ const TasksList = () => {
                 Last Updated At: {new Date(t.updatedAt).toLocaleString()}
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
+              <div className="items-center"></div>
               <Link href={`/editTask/${t._id}`}>
                 <HiPencilAlt size={24} />
               </Link>
