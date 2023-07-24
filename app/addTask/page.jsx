@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const APP_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [title, setTitle] = useState("");
@@ -69,4 +69,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
