@@ -3,12 +3,12 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center bg-slate-800 px-8 py-3">
-      <Link className="text-white font-bold" href={"/"}>
-        ToDo App
+    <nav className="flex justify-between items-center bg-blue-400 px-8 py-3">
+      <Link className="text-white font-bold text-xl" href={"/"}>
+        ToDecode-App
       </Link>
-      <Link className="bg-white p-2" href={"/addTask"}>
-        Add Task
+      <Link className="text-white text-bold p-2" href={"/addTask"}>
+        Add+
       </Link>
     </nav>
   );
