@@ -1,8 +1,10 @@
 import EditTaskForm from "@/components/EditTaskForm";
 
 const getTaskById = async (id) => {
+  const APP_URL = process.env.NEXT_PUBLIC_API_URL;
+
   try {
-    const res = await fetch(`http://localhost:3000/api/${id}`, {
+    const res = await fetch(`${APP_URL}/api/${id}`, {
       cache: "no-store",
     });
 

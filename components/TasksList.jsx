@@ -5,8 +5,10 @@ import RemoveBtn from "./RemoveBtn";
 import { HiPencilAlt } from "react-icons/hi";
 
 const getTasks = async () => {
+  const APP_URL = process.env.NEXT_PUBLIC_API_URL;
+
   try {
-    const res = await fetch("http://localhost:3000/api/tasks", {
+    const res = await fetch(`${APP_URL}/api/tasks`, {
       cache: "no-store",
     });
 

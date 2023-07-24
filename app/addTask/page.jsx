@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
+  const APP_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const [title, setTitle] = useState("");
   const [memo, setMemo] = useState("");
 
@@ -18,7 +20,7 @@ const page = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/tasks", {
+      const res = await fetch(`${APP_URL}/api/tasks`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const EditTaskForm = ({ id, title, memo }) => {
+  const APP_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const [newTitle, setNewTitle] = useState(title);
   const [newMemo, setNewMemo] = useState(memo);
 
@@ -13,7 +15,7 @@ const EditTaskForm = ({ id, title, memo }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/api/${id}`, {
+      const res = await fetch(`${APP_URL}/api/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ newTitle, newMemo }),

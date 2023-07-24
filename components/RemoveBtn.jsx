@@ -4,12 +4,14 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 
 export default function RemoveBtn({ id }) {
+  const APP_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const router = useRouter();
   const removeTask = async () => {
     const confirmed = confirm("Are you sure?");
 
     if (confirmed) {
-      const res = await fetch(`http://localhost:3000/api/tasks?id=${id}`, {
+      const res = await fetch(`${APP_URL}/api/tasks?id=${id}`, {
         method: "DELETE",
       });
 
@@ -37,7 +39,7 @@ export default function RemoveBtn({ id }) {
 
 //     if (confirmed) {
 //       try {
-//         const res = await fetch(`http://localhost:3000/api/tasks?id=${id}`, {
+//         const res = await fetch(`APP_URL/api/tasks?id=${id}`, {
 //           method: "DELETE",
 //         });
 
