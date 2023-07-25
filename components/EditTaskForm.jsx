@@ -25,6 +25,7 @@ const EditTaskForm = ({ id, title, memo }) => {
         throw new Error("Failed to Update Task");
       }
 
+      router.refresh();
       router.push("/");
     } catch (error) {
       console.log(error);
